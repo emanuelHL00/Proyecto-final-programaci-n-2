@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="co.edu.uniquindio.poo.proyecto_final_p2.controller.RegistroController">
+    <children>
+        <VBox alignment="CENTER" spacing="12" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20">
+            <children>
+                <Label style="-fx-font-size: 18; -fx-font-weight: bold;" text="Registro de Cuenta" />
+
+                <!-- Selección de tipo -->
+                <HBox alignment="CENTER" spacing="5">
+                    <Label text="Tipo de cuenta:" />
+                    <ComboBox fx:id="cbTipoCuenta" prefWidth="150" />
+                </HBox>
+
+                <Separator />
+
+                <!-- Campos comunes -->
+                <VBox spacing="5">
+                    <Label text="ID:" />
+                    <TextField fx:id="txtId" />
+
+                    <Label text="Nombre completo:" />
+                    <TextField fx:id="txtNombre" />
+
+                    <Label text="Correo electrónico:" />
+                    <TextField fx:id="txtCorreo" />
+
+                    <Label text="Número de teléfono:" />
+                    <TextField fx:id="txtTelefono" />
+
+                    <Label text="Contraseña:" />
+                    <PasswordField fx:id="txtContrasena" />
+                </VBox>
+
+                <Separator />
+
+                <!-- Campos específicos de Repartidor -->
+                <VBox fx:id="vboxRepartidor" spacing="5">
+                    <Label text="Estado de disponibilidad:" />
+                    <ChoiceBox fx:id="cbDisponibilidad" />
+
+                    <Label text="Zona de cobertura:" />
+                    <ChoiceBox fx:id="cbZona" />
+                </VBox>
+
+                <Button fx:id="btnRegistrar" onAction="#registrarse" text="Registrar" />
+                <Label fx:id="lblMensaje" textFill="red" />
+            </children>
+
+            <padding>
+                <Insets bottom="20" left="20" right="20" top="20" />
+            </padding>
+        </VBox>
+    </children>
+</AnchorPane>

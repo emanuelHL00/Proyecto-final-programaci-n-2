@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.poo.proyecto_final_p2.controller.DashboardAdminController"
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: #f8f9fa;">
+
+    <!-- Panel lateral izquierdo -->
+    <VBox layoutX="0" layoutY="0" prefWidth="180" prefHeight="400" spacing="12" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+          style="-fx-background-color: #ffffff; -fx-padding: 20; -fx-border-color: #dee2e6; -fx-border-width: 0 1 0 0;">
+
+        <Label text="Menú Administrador"
+               style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #212529;" />
+
+        <Button fx:id="btnGestionUsuarios" text="Gestión de usuarios" maxWidth="160"
+                style="-fx-background-color: transparent; -fx-text-fill: #495057; -fx-font-size: 14px; -fx-cursor: hand;" />
+
+        <Button fx:id="btnGestionRepartidores" text="Gestión de repartidores" maxWidth="160"
+                style="-fx-background-color: transparent; -fx-text-fill: #495057; -fx-font-size: 14px; -fx-cursor: hand;" />
+
+        <Button fx:id="btnAsignarEnvios" text="Asignar envíos" maxWidth="160"
+                style="-fx-background-color: transparent; -fx-text-fill: #495057; -fx-font-size: 14px; -fx-cursor: hand;" />
+    </VBox>
+
+    <!-- Área principal donde cargaremos contenido dinámico -->
+    <VBox fx:id="contentArea" layoutX="200" layoutY="20" prefWidth="380" prefHeight="360" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="200"
+          style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;">
+        <Label text="Bienvenido al Panel de Administrador" style="-fx-font-size: 20px; -fx-text-fill: #212529;" />
+    </VBox>
+
+</AnchorPane>
+
