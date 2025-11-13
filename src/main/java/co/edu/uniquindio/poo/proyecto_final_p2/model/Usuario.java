@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.proyecto_final_p2.model;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,10 +9,16 @@ public class Usuario extends Persona {
     private String direccion;
     private List<Envio> listEnviosPropios;
 
+    // Patrón Strategy
+    private IEstrategiaEnvio estrategiaEnvio;
+
     private Usuario(Builder builder) {
         super(builder.id, builder.nombre, builder.telefono, builder.contrasena);
         this.listEnviosPropios = new ArrayList<>();
         this.direccion = builder.direccion;
+
+        // Estrategia por defecto
+        this.estrategiaEnvio = new EstrategiaNormal();
     }
 
     // Patrón builder
@@ -52,6 +59,7 @@ public class Usuario extends Persona {
         }
     }
 
+    // Método para crear envío usando la estrategia actual
     public Envio crearEnvio(String destino, ZonaCobertura departamento, double distancia, double peso, double volumen, boolean prioridad) {
         Administrador admin = Administrador.getInstancia();
         List<Envio> listaEnvios = admin.getListEnvios();
@@ -60,7 +68,28 @@ public class Usuario extends Persona {
         Envio nuevoEnvio = new Envio(nuevoId, destino, departamento, distancia, peso, volumen, prioridad);
 
         listaEnvios.add(nuevoEnvio);
+        listEnviosPropios.add(nuevoEnvio);
+
         return nuevoEnvio;
+    }
+
+    // Método para calcular costo del envío usando la estrategia
+    public double calcularCostoEnvio(Envio envio) {
+        return estrategiaEnvio.calcularCosto(envio);
+    }
+
+    // Método para obtener tiempo estimado usando la estrategia
+    public int obtenerTiempoEstimado(Envio envio) {
+        return estrategiaEnvio.calcularTiempoEstimado(envio);
+    }
+
+    // Cambiar estrategia de envío
+    public void setEstrategiaEnvio(IEstrategiaEnvio estrategiaEnvio) {
+        this.estrategiaEnvio = estrategiaEnvio;
+    }
+
+    public IEstrategiaEnvio getEstrategiaEnvio() {
+        return estrategiaEnvio;
     }
 
     public List<Envio> getListEnviosPropios() {

@@ -1,5 +1,7 @@
 package co.edu.uniquindio.poo.proyecto_final_p2.model;
 
+
+
 public class Envio {
 
     private int id;
@@ -12,6 +14,9 @@ public class Envio {
     private double volumen;
     private boolean prioridad;
 
+    // Patrón State
+    private IEstadoEnvio estadoActual;
+
     public Envio(int id, String destino, ZonaCobertura departamento, double distancia, double peso, double volumen, boolean prioridad) {
         this.id = id;
         this.destino = destino;
@@ -21,8 +26,37 @@ public class Envio {
         this.peso = peso;
         this.volumen = volumen;
         this.prioridad = prioridad;
+
+        // Inicializar con el estado Solicitado
+        this.estadoActual = new EstadoSolicitado();
     }
 
+    // Métodos del patrón State
+    public void avanzarEstado() {
+        estadoActual.avanzar(this);
+    }
+
+    public void cancelarEnvio() {
+        estadoActual.cancelar(this);
+    }
+
+    public String obtenerDescripcionEstado() {
+        return estadoActual.obtenerDescripcion();
+    }
+
+    public boolean puedeModificar() {
+        return estadoActual.puedeModificar();
+    }
+
+    public void setEstadoActual(IEstadoEnvio estadoActual) {
+        this.estadoActual = estadoActual;
+    }
+
+    public IEstadoEnvio getEstadoActual() {
+        return estadoActual;
+    }
+
+    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -92,7 +126,8 @@ public class Envio {
         return "Envío #" + id + " | Destino: " + destino +
                 " | Departamento: " + departamento +
                 " | Peso: " + peso + " kg | Distancia: " + distancia +
-                " km | Volumen: " + volumen + " m³ | Prioridad: " + (prioridad ? "Sí" : "No");
+                " km | Volumen: " + volumen + " m³ | Prioridad: " + (prioridad ? "Sí" : "No") +
+                " | Estado: " + estadoEnvio;
     }
 }
 
