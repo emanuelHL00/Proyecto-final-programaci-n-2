@@ -94,7 +94,7 @@ public class Administrador {
         Envio envio1 = new Envio(1, "Calle 20 #15-30", ZonaCobertura.ARMENIA, 10.5, 3.0, 0.5, true);
         Envio envio2 = new Envio(2, "Carrera 8 #12-45", ZonaCobertura.MONTENEGRO, 25.0, 8.0, 1.2, false);
         Envio envio3 = new Envio(3, "Avenida Centenario #40-20", ZonaCobertura.CALARCA, 15.0, 2.5, 0.3, true);
-        // Cambiar a ASIGNADOenvio3.avanzarEstado(); // Cambiar a ASIGNADO
+        envio3.avanzarEstado(); // Cambiar a ASIGNADO
 
         // Agregar envíos
         listEnvios.add(envio1);

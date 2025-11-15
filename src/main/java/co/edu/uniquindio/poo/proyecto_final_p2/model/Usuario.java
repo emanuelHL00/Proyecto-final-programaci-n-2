@@ -73,6 +73,13 @@ public class Usuario extends Persona {
         return nuevoEnvio;
     }
 
+    public Pago pagarEnvio(Envio envio, Repartidor repartidor, MetodoPago metodoPago) {
+        Pago pago = new Pago(this, envio, repartidor);
+        pago.seleccionarMetodoPago(metodoPago);
+        pago.realizarPago();
+        return pago;
+    }
+
     // Método para calcular costo del envío usando la estrategia
     public double calcularCostoEnvio(Envio envio) {
         return estrategiaEnvio.calcularCosto(envio);
