@@ -5,7 +5,7 @@ public class EstrategiaNormal implements IEstrategiaEnvio {
 
     @Override
     public double calcularCosto(Envio envio) {
-        // Usar el sistema de decoradores existente sin modificaciones
+        // Usar el sistema de decoradores
         Tarifa tarifa = new TarifaBase();
         tarifa = new TarifaDistancia(tarifa, envio);
         tarifa = new TarifaPeso(tarifa, envio);
@@ -17,12 +17,10 @@ public class EstrategiaNormal implements IEstrategiaEnvio {
 
     @Override
     public int calcularTiempoEstimado(Envio envio) {
-        // Tiempo estándar
-        int tiempoBase = 24; // 24 horas base
+        int tiempoBase = 24;
 
-        // Agregar tiempo según distancia
         if (envio.getDistancia() > 50) {
-            tiempoBase += 24; // Un día adicional
+            tiempoBase += 24;
         }
 
         return tiempoBase;

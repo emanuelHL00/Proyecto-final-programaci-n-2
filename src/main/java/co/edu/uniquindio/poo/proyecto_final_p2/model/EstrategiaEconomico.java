@@ -5,25 +5,21 @@ public class EstrategiaEconomico implements IEstrategiaEnvio {
 
     @Override
     public double calcularCosto(Envio envio) {
-        // Usar el sistema de decoradores sin prioridad
+        // Usar el sistema de decoradores
         Tarifa tarifa = new TarifaBase();
         tarifa = new TarifaDistancia(tarifa, envio);
         tarifa = new TarifaPeso(tarifa, envio);
         tarifa = new TarifaVolumen(tarifa, envio);
-        // No aplicar TarifaPrioridad
 
-        // Descuento del 20% por ser económico
         return tarifa.calcularPrecio() * 0.8;
     }
 
     @Override
     public int calcularTiempoEstimado(Envio envio) {
-        // Tiempo más largo
-        int tiempoBase = 48; // 48 horas base (2 días)
+        int tiempoBase = 48;
 
-        // Agregar tiempo según distancia
         if (envio.getDistancia() > 50) {
-            tiempoBase += 48; // Dos días adicionales
+            tiempoBase += 48;
         }
 
         return tiempoBase;

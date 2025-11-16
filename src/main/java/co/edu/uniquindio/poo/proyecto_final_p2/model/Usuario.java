@@ -59,7 +59,6 @@ public class Usuario extends Persona {
         }
     }
 
-    // Método para crear envío usando la estrategia actual
     public Envio crearEnvio(String destino, ZonaCobertura departamento, double distancia, double peso, double volumen, boolean prioridad) {
         Administrador admin = Administrador.getInstancia();
         List<Envio> listaEnvios = admin.getListEnvios();
@@ -80,17 +79,14 @@ public class Usuario extends Persona {
         return pago;
     }
 
-    // Método para calcular costo del envío usando la estrategia
     public double calcularCostoEnvio(Envio envio) {
         return estrategiaEnvio.calcularCosto(envio);
     }
 
-    // Método para obtener tiempo estimado usando la estrategia
     public int obtenerTiempoEstimado(Envio envio) {
         return estrategiaEnvio.calcularTiempoEstimado(envio);
     }
 
-    // Cambiar estrategia de envío
     public void setEstrategiaEnvio(IEstrategiaEnvio estrategiaEnvio) {
         this.estrategiaEnvio = estrategiaEnvio;
     }

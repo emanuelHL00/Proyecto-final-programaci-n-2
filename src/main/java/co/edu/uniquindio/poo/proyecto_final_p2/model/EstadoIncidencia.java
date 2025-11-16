@@ -5,7 +5,6 @@ public class EstadoIncidencia implements IEstadoEnvio {
 
     @Override
     public void avanzar(Envio envio) {
-        // Se puede reintentar el envío
         envio.setEstadoEnvio(EstadoEnvio.SOLICITADO);
         envio.setEstadoActual(new EstadoSolicitado());
         System.out.println("Envío reintentado después de incidencia");

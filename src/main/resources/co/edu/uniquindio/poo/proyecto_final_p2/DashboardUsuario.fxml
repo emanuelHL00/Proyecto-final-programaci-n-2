@@ -8,7 +8,6 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="co.edu.uniquindio.poo.proyecto_final_p2.controller.DashboardUsuarioController">
 
-    <!-- Panel lateral izquierdo -->
     <VBox layoutX="0" layoutY="0" prefHeight="600" prefWidth="200" spacing="12"
           style="-fx-background-color: #8e44ad; -fx-padding: 20; -fx-border-color: #9b59b6; -fx-border-width: 0 2 0 0;"
           AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
@@ -31,7 +30,6 @@
                 text="Mi Dirección" />
     </VBox>
 
-    <!-- Área principal donde cargaremos el contenido dinámico -->
     <ScrollPane layoutX="220" layoutY="20" prefHeight="560.0" prefWidth="660.0"
                 style="-fx-background: white; -fx-border-color: #bdc3c7; -fx-border-radius: 5; -fx-background-radius: 5;"
                 AnchorPane.leftAnchor="220" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20"

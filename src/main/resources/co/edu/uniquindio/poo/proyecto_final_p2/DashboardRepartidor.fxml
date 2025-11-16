@@ -8,7 +8,6 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="750.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_p2.controller.DashboardRepartidorController">
 
-    <!-- Panel lateral izquierdo -->
     <VBox layoutX="0" layoutY="0" prefWidth="200" prefHeight="500" spacing="12"
           AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
           style="-fx-background-color: #ffffff; -fx-padding: 20; -fx-border-color: #dee2e6; -fx-border-width: 0 1 0 0;">
@@ -23,7 +22,6 @@
                 style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 13px; -fx-cursor: hand; -fx-background-radius: 5;" />
     </VBox>
 
-    <!-- Área principal donde cargaremos contenido dinámico -->
     <VBox fx:id="contentArea" layoutX="220" layoutY="20" prefWidth="510" prefHeight="460"
           AnchorPane.topAnchor="20" AnchorPane.leftAnchor="220" AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20"
           style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;">
@@ -31,7 +29,6 @@
         <Label text="Cargando información..." style="-fx-font-size: 18px; -fx-text-fill: #212529;" />
     </VBox>
 
-    <!-- ComboBox y botón ocultos (legacy del diseño anterior) -->
     <ComboBox fx:id="comboDisponibilidad" layoutX="220" layoutY="100" prefWidth="200" visible="false" managed="false" />
     <Button fx:id="btnGuardarDisponibilidad" layoutX="220" layoutY="140" text="Guardar" visible="false" managed="false" />
 

@@ -27,7 +27,6 @@ public class Envio {
         this.volumen = volumen;
         this.prioridad = prioridad;
 
-        // Inicializar con el estado Solicitado
         this.estadoActual = new EstadoSolicitado();
     }
 

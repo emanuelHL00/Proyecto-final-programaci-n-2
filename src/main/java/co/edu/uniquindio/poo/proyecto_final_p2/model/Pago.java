@@ -15,25 +15,21 @@ public class Pago {
         this.pagoRealizado = false;
     }
 
-    /**
-     * Permite al usuario seleccionar el método de pago.
-     */
+
     public void seleccionarMetodoPago(MetodoPago metodoPago) {
         this.metodoPago = metodoPago;
         System.out.println("Método de pago seleccionado: " + metodoPago);
     }
 
-    /**
-     * Realiza el pago y actualiza los estados del envío y repartidor.
-     */
+
     public void realizarPago() {
         if (metodoPago == null) {
-            System.out.println("⚠️ No se ha seleccionado un método de pago.");
+            System.out.println("No se ha seleccionado un método de pago.");
             return;
         }
 
         if (pagoRealizado) {
-            System.out.println("⚠️ El pago ya fue realizado anteriormente.");
+            System.out.println("El pago ya fue realizado anteriormente.");
             return;
         }
 
@@ -41,9 +37,9 @@ public class Pago {
         this.envio.setEstadoEnvio(EstadoEnvio.EN_RUTA);
         this.repartidor.setDisponibilidad(Disponibilidad.EN_RUTA);
 
-        System.out.println("✅ Pago realizado exitosamente.");
-        System.out.println("➡ Envío #" + envio.getId() + " ahora está EN CAMINO.");
-        System.out.println("🚚 Repartidor " + repartidor.getNombre() + " está EN RUTA.");
+        System.out.println("Pago realizado exitosamente.");
+        System.out.println("Envío #" + envio.getId() + " ahora está EN CAMINO.");
+        System.out.println("Repartidor " + repartidor.getNombre() + " está EN RUTA.");
     }
 
     public boolean isPagoRealizado() {

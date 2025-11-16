@@ -32,19 +32,15 @@ public class DashboardRepartidorController {
 
     private Repartidor repartidorActual;
 
-    /**
-     * Método para inicializar los datos del repartidor
-     */
+
     public void inicializarDatos(Repartidor repartidor) {
         this.repartidorActual = repartidor;
         System.out.println("Repartidor logueado: " + repartidor.getNombre());
         System.out.println("Zona: " + repartidor.getZona());
         System.out.println("Disponibilidad: " + repartidor.getDisponibilidad());
 
-        // Configurar listeners para los botones
         configurarBotones();
 
-        // Mostrar información inicial
         mostrarInformacionInicial();
     }
 
@@ -66,9 +62,7 @@ public class DashboardRepartidorController {
         });
     }
 
-    /**
-     * Muestra información inicial del repartidor
-     */
+
     private void mostrarInformacionInicial() {
         contentArea.getChildren().clear();
 
@@ -81,7 +75,6 @@ public class DashboardRepartidorController {
         );
         lblInfo.setStyle("-fx-font-size: 16px; -fx-text-fill: #495057; -fx-padding: 10 0 0 0;");
 
-        // Contar envíos de su zona
         Administrador admin = Administrador.getInstancia();
         long enviosPendientes = admin.getListEnvios().stream()
                 .filter(e -> e.getDepartamento().equals(repartidorActual.getZona()))
@@ -100,49 +93,40 @@ public class DashboardRepartidorController {
     }
 
 
-    /**
-     * Muestra los envíos asignados o disponibles en la zona del repartidor
-     */
+
     private void mostrarEnviosAsignados() {
         contentArea.getChildren().clear();
 
         Label titulo = new Label("Envíos en tu Zona: " + repartidorActual.getZona());
         titulo.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #212529;");
 
-        // Crear tabla de envíos
         TableView<Envio> tabla = new TableView<>();
         tabla.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-// Columna ID
+
         TableColumn<Envio, Integer> colId = new TableColumn<>("ID");
         colId.setCellValueFactory(cellData ->
                 new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
 
-// Columna Destino
         TableColumn<Envio, String> colDestino = new TableColumn<>("Destino");
         colDestino.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getDestino()));
 
-// Columna Peso
         TableColumn<Envio, Double> colPeso = new TableColumn<>("Peso (kg)");
         colPeso.setCellValueFactory(cellData ->
                 new SimpleDoubleProperty(cellData.getValue().getPeso()).asObject());
 
-// Columna Distancia
         TableColumn<Envio, Double> colDistancia = new TableColumn<>("Distancia (km)");
         colDistancia.setCellValueFactory(cellData ->
                 new SimpleDoubleProperty(cellData.getValue().getDistancia()).asObject());
 
-// Columna Estado
         TableColumn<Envio, EstadoEnvio> colEstado = new TableColumn<>("Estado");
         colEstado.setCellValueFactory(cellData ->
                 new SimpleObjectProperty<>(cellData.getValue().getEstadoEnvio()));
 
-// Columna Zona/Departamento
         TableColumn<Envio, ZonaCobertura> colZona = new TableColumn<>("Zona");
         colZona.setCellValueFactory(cellData ->
                 new SimpleObjectProperty<>(cellData.getValue().getDepartamento()));
 
-// Columna Prioridad (ya te funciona)
         TableColumn<Envio, Boolean> colPrioridad = new TableColumn<>("Prioridad");
         colPrioridad.setCellValueFactory(cellData ->
                 new SimpleBooleanProperty(cellData.getValue().isPrioridad()));
@@ -178,13 +162,11 @@ public class DashboardRepartidorController {
 
         tabla.getColumns().addAll(colId, colDestino, colPeso, colDistancia, colEstado, colPrioridad);
 
-        // === DEBUG: Información del filtrado ===
         Administrador admin = Administrador.getInstancia();
         System.out.println("\n=== DEBUG ENVÍOS ===");
         System.out.println("Total envíos en sistema: " + admin.getListEnvios().size());
         System.out.println("Zona del repartidor: " + repartidorActual.getZona());
 
-        // 🔹 Filtrar correctamente usando ENUM y evitando nulls
         List<Envio> enviosFiltrados = admin.getListEnvios().stream()
                 .filter(e -> {
                     Object dep = e.getDepartamento();
@@ -203,11 +185,9 @@ public class DashboardRepartidorController {
         System.out.println("Envíos filtrados: " + enviosFiltrados.size());
         enviosFiltrados.forEach(e -> System.out.println("  - Envío #" + e.getId() + " (" + e.getDepartamento() + ")"));
 
-        // Cargar datos a la tabla
         ObservableList<Envio> envios = FXCollections.observableArrayList(enviosFiltrados);
         tabla.setItems(envios);
 
-        // Si no hay envíos
         if (envios.isEmpty()) {
             Label lblVacio = new Label("No hay envíos disponibles en tu zona actualmente.");
             lblVacio.setStyle("-fx-font-size: 14px; -fx-text-fill: #6c757d; -fx-padding: 20;");
@@ -216,7 +196,6 @@ public class DashboardRepartidorController {
             tabla.setPlaceholder(emptyBox);
         }
 
-        // Botones (NO tocados)
         Button btnAvanzarEstado = new Button("Avanzar Estado del Envío");
         btnAvanzarEstado.setStyle("-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold;");
         btnAvanzarEstado.setOnAction(e -> avanzarEstadoEnvio(tabla));
@@ -235,9 +214,7 @@ public class DashboardRepartidorController {
 
 
 
-    /**
-     * Avanza el estado del envío seleccionado
-     */
+
     private void avanzarEstadoEnvio(TableView<Envio> tabla) {
         Envio seleccionado = tabla.getSelectionModel().getSelectedItem();
         if (seleccionado == null) {
@@ -245,23 +222,20 @@ public class DashboardRepartidorController {
             return;
         }
 
-        // Verificar que el repartidor esté disponible
         if (repartidorActual.getDisponibilidad() == Disponibilidad.INACTIVO) {
             mostrarAlerta("Error", "Debes estar ACTIVO o EN_RUTA para gestionar envíos", Alert.AlertType.ERROR);
             return;
         }
 
-        // Avanzar el estado usando el patrón State
+        // Avanzar de estado usando el patrón State
         try {
             EstadoEnvio estadoAnterior = seleccionado.getEstadoEnvio();
             seleccionado.avanzarEstado();
 
-            // Si el envío pasó a EN_RUTA, actualizar disponibilidad del repartidor
             if (seleccionado.getEstadoEnvio() == EstadoEnvio.EN_RUTA) {
                 repartidorActual.setDisponibilidad(Disponibilidad.EN_RUTA);
             }
 
-            // Si el envío fue entregado, liberar al repartidor
             if (seleccionado.getEstadoEnvio() == EstadoEnvio.ENTREGADO) {
                 repartidorActual.setDisponibilidad(Disponibilidad.ACTIVO);
             }
@@ -277,9 +251,7 @@ public class DashboardRepartidorController {
         }
     }
 
-    /**
-     * Reporta una incidencia en el envío
-     */
+
     private void reportarIncidencia(TableView<Envio> tabla) {
         Envio seleccionado = tabla.getSelectionModel().getSelectedItem();
         if (seleccionado == null) {
@@ -296,7 +268,6 @@ public class DashboardRepartidorController {
             if (response == ButtonType.OK) {
                 seleccionado.cancelarEnvio();
 
-                // Liberar al repartidor si estaba en ruta
                 if (repartidorActual.getDisponibilidad() == Disponibilidad.EN_RUTA) {
                     repartidorActual.setDisponibilidad(Disponibilidad.ACTIVO);
                 }
@@ -310,9 +281,7 @@ public class DashboardRepartidorController {
         });
     }
 
-    /**
-     * Muestra la interfaz para cambiar disponibilidad
-     */
+
     private void mostrarCambiarDisponibilidad() {
         contentArea.getChildren().clear();
 
@@ -325,13 +294,11 @@ public class DashboardRepartidorController {
         Label lblSeleccionar = new Label("Selecciona nueva disponibilidad:");
         lblSeleccionar.setStyle("-fx-font-size: 14px; -fx-text-fill: #212529;");
 
-        // ComboBox para seleccionar disponibilidad
         ComboBox<Disponibilidad> cbDisponibilidad = new ComboBox<>();
         cbDisponibilidad.getItems().addAll(Disponibilidad.values());
         cbDisponibilidad.setValue(repartidorActual.getDisponibilidad());
         cbDisponibilidad.setPrefWidth(200);
 
-        // Descripción de cada estado
         Label lblDescripcion = new Label();
         lblDescripcion.setStyle("-fx-font-size: 12px; -fx-text-fill: #6c757d; -fx-padding: 5 0 0 0;");
         lblDescripcion.setWrapText(true);
@@ -340,18 +307,17 @@ public class DashboardRepartidorController {
             Disponibilidad seleccionada = cbDisponibilidad.getValue();
             switch (seleccionada) {
                 case ACTIVO:
-                    lblDescripcion.setText("✓ Disponible para recibir nuevos envíos");
+                    lblDescripcion.setText("Disponible para recibir nuevos envíos");
                     break;
                 case INACTIVO:
-                    lblDescripcion.setText("⚠ No disponible para envíos (descanso/fin de turno)");
+                    lblDescripcion.setText("No disponible para envíos (descanso/fin de turno)");
                     break;
                 case EN_RUTA:
-                    lblDescripcion.setText("🚚 Actualmente realizando una entrega");
+                    lblDescripcion.setText("Actualmente realizando una entrega");
                     break;
             }
         });
 
-        // Trigger inicial
         cbDisponibilidad.fireEvent(new javafx.event.ActionEvent());
 
         Button btnGuardar = new Button("Guardar Cambios");
@@ -359,7 +325,6 @@ public class DashboardRepartidorController {
         btnGuardar.setOnAction(e -> {
             Disponibilidad nuevaDisponibilidad = cbDisponibilidad.getValue();
 
-            // Validar que no esté EN_RUTA si tiene envíos pendientes
             if (nuevaDisponibilidad == Disponibilidad.INACTIVO) {
                 long enviosEnRuta = Administrador.getInstancia().getListEnvios().stream()
                         .filter(env -> env.getDepartamento().equals(repartidorActual.getZona()))
@@ -392,9 +357,7 @@ public class DashboardRepartidorController {
         contentArea.getChildren().add(container);
     }
 
-    /**
-     * Guarda la disponibilidad (método legacy para el botón del FXML)
-     */
+
     private void guardarDisponibilidad() {
         String nuevaDisponibilidad = comboDisponibilidad.getValue();
         if (nuevaDisponibilidad != null) {
@@ -407,7 +370,6 @@ public class DashboardRepartidorController {
 
                 mostrarAlerta("Éxito", "Disponibilidad actualizada a: " + disponibilidad, Alert.AlertType.INFORMATION);
 
-                // Ocultar controles
                 comboDisponibilidad.setVisible(false);
                 btnGuardarDisponibilidad.setVisible(false);
             } catch (Exception e) {
@@ -416,9 +378,7 @@ public class DashboardRepartidorController {
         }
     }
 
-    /**
-     * Método auxiliar para mostrar alertas
-     */
+
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);

@@ -30,31 +30,24 @@ public class HelloController {
     @FXML
     private Button btnRegistrarse;
 
-    /**
-     * Método para manejar el inicio de sesión
-     */
+
     @FXML
     void inicioSesion(ActionEvent event) {
         String idStr = txtId.getText().trim();
         String contrasena = txtContrasena.getText().trim();
 
-        // Validación básica
         if (idStr.isEmpty() || contrasena.isEmpty()) {
             mostrarAlerta("Error", "Por favor complete todos los campos", Alert.AlertType.ERROR);
             return;
         }
 
-        // Obtener instancia del Administrador
         Administrador admin = Administrador.getInstancia();
 
-        // PRIMERO: Verificar si es el administrador
         if (idStr.equals(admin.getUsuario()) && contrasena.equals(admin.getContrasenia())) {
-            // Login exitoso como Administrador
             abrirDashboardAdmin();
             return;
         }
 
-        // SEGUNDO: Intentar convertir el ID a número para buscar usuarios/repartidores
         int id;
         try {
             id = Integer.parseInt(idStr);
@@ -63,12 +56,9 @@ public class HelloController {
             return;
         }
 
-        // TERCERO: Buscar en la lista de usuarios
         Usuario usuario = admin.buscarUsuario(id);
         if (usuario != null) {
-            // Verificar contraseña
             if (usuario.getContrasena().equals(contrasena)) {
-                // Login exitoso como Usuario
                 abrirDashboardUsuario(usuario);
                 return;
             } else {
@@ -77,12 +67,9 @@ public class HelloController {
             }
         }
 
-        // CUARTO: Si no es usuario, buscar en la lista de repartidores
         Repartidor repartidor = admin.buscarRepartidor(id);
         if (repartidor != null) {
-            // Verificar contraseña
             if (repartidor.getContrasena().equals(contrasena)) {
-                // Login exitoso como Repartidor
                 abrirDashboardRepartidor(repartidor);
                 return;
             } else {
@@ -91,23 +78,18 @@ public class HelloController {
             }
         }
 
-        // Si no se encontró en ninguna lista
         mostrarAlerta("Error", "Usuario no encontrado. Por favor regístrese", Alert.AlertType.ERROR);
     }
 
-    /**
-     * Método para abrir el Dashboard de Administrador
-     */
+
     private void abrirDashboardAdmin() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_p2/DashboardAdmin.fxml"));
             Parent root = loader.load();
 
-            // Obtener el controlador
             DashboardAdminController controller = loader.getController();
             controller.inicializarDatos();
 
-            // Cambiar la escena
             Stage stage = (Stage) btnIniciarSesion.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -120,19 +102,15 @@ public class HelloController {
         }
     }
 
-    /**
-     * Método para abrir el Dashboard de Usuario
-     */
+
     private void abrirDashboardUsuario(Usuario usuario) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_p2/DashboardUsuario.fxml"));
             Parent root = loader.load();
 
-            // Obtener el controlador y pasar el usuario
             DashboardUsuarioController controller = loader.getController();
             controller.inicializarDatos(usuario);
 
-            // Cambiar la escena
             Stage stage = (Stage) btnIniciarSesion.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -145,19 +123,15 @@ public class HelloController {
         }
     }
 
-    /**
-     * Método para abrir el Dashboard de Repartidor
-     */
+
     private void abrirDashboardRepartidor(Repartidor repartidor) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/proyecto_final_p2/DashboardRepartidor.fxml"));
             Parent root = loader.load();
 
-            // Obtener el controlador y pasar el repartidor
             DashboardRepartidorController controller = loader.getController();
             controller.inicializarDatos(repartidor);
 
-            // Cambiar la escena
             Stage stage = (Stage) btnIniciarSesion.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -170,9 +144,7 @@ public class HelloController {
         }
     }
 
-    /**
-     * Método para cambiar a la vista de registro
-     */
+
     @FXML
     void PasarRegistro(ActionEvent event) {
         try {
@@ -192,9 +164,7 @@ public class HelloController {
         }
     }
 
-    /**
-     * Método auxiliar para mostrar alertas
-     */
+
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);

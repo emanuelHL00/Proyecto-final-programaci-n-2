@@ -32,9 +32,7 @@ public class DashboardAdminController {
 
     private Administrador admin;
 
-    /**
-     * Método para inicializar el dashboard del administrador
-     */
+
     public void inicializarDatos() {
         this.admin = Administrador.getInstancia();
         System.out.println("Administrador logueado");
@@ -42,7 +40,6 @@ public class DashboardAdminController {
         System.out.println("Total repartidores: " + admin.getListRepartidores().size());
         System.out.println("Total envíos: " + admin.getListEnvios().size());
 
-        // Configurar listeners para los botones
         configurarBotones();
     }
 
@@ -52,7 +49,6 @@ public class DashboardAdminController {
         btnAsignarEnvios.setOnAction(event -> mostrarGestionEnvios());
     }
 
-    // ==================== GESTIÓN DE USUARIOS ====================
 
     private void mostrarGestionUsuarios() {
         contentArea.getChildren().clear();
@@ -60,7 +56,6 @@ public class DashboardAdminController {
         Label titulo = new Label("Gestión de Usuarios");
         titulo.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #212529;");
 
-        // Botones de acción
         Button btnAgregar = new Button("Agregar Usuario");
         Button btnEditar = new Button("Editar Usuario");
         Button btnEliminar = new Button("Eliminar Usuario");
@@ -69,12 +64,10 @@ public class DashboardAdminController {
         btnEditar.setStyle("-fx-background-color: #007bff; -fx-text-fill: white; -fx-cursor: hand;");
         btnEliminar.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-cursor: hand;");
 
-        // Tabla de usuarios
         TableView<Usuario> tablaUsuarios = new TableView<>();
         tablaUsuarios.setPrefHeight(300);
         tablaUsuarios.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // Columnas
         TableColumn<Usuario, Integer> colId = new TableColumn<>("ID");
         colId.setCellValueFactory(cellData ->
                 new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
@@ -97,11 +90,9 @@ public class DashboardAdminController {
 
         tablaUsuarios.getColumns().addAll(colId, colNombre, colTelefono, colDireccion);
 
-        // Cargar datos
         ObservableList<Usuario> listaUsuarios = FXCollections.observableArrayList(admin.getListUsuarios());
         tablaUsuarios.setItems(listaUsuarios);
 
-        // Eventos botones
         btnAgregar.setOnAction(e -> {
             agregarUsuario();
             listaUsuarios.setAll(admin.getListUsuarios());
@@ -258,7 +249,6 @@ public class DashboardAdminController {
         dialog.showAndWait();
     }
 
-    // ==================== GESTIÓN DE REPARTIDORES ====================
 
     private void mostrarGestionRepartidores() {
         contentArea.getChildren().clear();
@@ -266,7 +256,6 @@ public class DashboardAdminController {
         Label titulo = new Label("Gestión de Repartidores");
         titulo.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #212529;");
 
-        // Botones de acción
         Button btnAgregar = new Button("Agregar Repartidor");
         Button btnEditar = new Button("Editar Repartidor");
         Button btnEliminar = new Button("Eliminar Repartidor");
@@ -275,35 +264,30 @@ public class DashboardAdminController {
         btnEditar.setStyle("-fx-background-color: #007bff; -fx-text-fill: white; -fx-cursor: hand;");
         btnEliminar.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-cursor: hand;");
 
-        // Tabla de repartidores
         TableView<Repartidor> tablaRepartidores = new TableView<>();
         tablaRepartidores.setPrefHeight(300);
         tablaRepartidores.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // Columna ID
         TableColumn<Repartidor, Integer> colId = new TableColumn<>("ID");
         colId.setCellValueFactory(cellData ->
                 new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
         colId.setPrefWidth(60);
 
-        // Columna Nombre
         TableColumn<Repartidor, String> colNombre = new TableColumn<>("Nombre");
         colNombre.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getNombre()));
         colNombre.setPrefWidth(120);
 
-        // Columna Teléfono
         TableColumn<Repartidor, String> colTelefono = new TableColumn<>("Teléfono");
         colTelefono.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getTelefono()));
         colTelefono.setPrefWidth(100);
 
-        // Columna Zona (enum ZonaCobertura)
         TableColumn<Repartidor, ZonaCobertura> colZona = new TableColumn<>("Zona");
         colZona.setCellValueFactory(cellData ->
                 new SimpleObjectProperty<>(cellData.getValue().getZona()));
         colZona.setPrefWidth(100);
-        // Opcional: para mostrar texto limpio en la tabla
+
         colZona.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(ZonaCobertura item, boolean empty) {
@@ -312,7 +296,6 @@ public class DashboardAdminController {
             }
         });
 
-        // Columna Disponibilidad (enum Disponibilidad)
         TableColumn<Repartidor, Disponibilidad> colDisponibilidad = new TableColumn<>("Disponibilidad");
         colDisponibilidad.setCellValueFactory(cellData ->
                 new SimpleObjectProperty<>(cellData.getValue().getDisponibilidad()));
@@ -327,11 +310,9 @@ public class DashboardAdminController {
 
         tablaRepartidores.getColumns().addAll(colId, colNombre, colTelefono, colZona, colDisponibilidad);
 
-        // Cargar datos
         ObservableList<Repartidor> listaRepartidores = FXCollections.observableArrayList(admin.getListRepartidores());
         tablaRepartidores.setItems(listaRepartidores);
 
-        // Eventos de botones
         btnAgregar.setOnAction(e -> {
             agregarRepartidor();
             listaRepartidores.setAll(admin.getListRepartidores());
@@ -510,7 +491,6 @@ public class DashboardAdminController {
         dialog.showAndWait();
     }
 
-    // ==================== GESTIÓN DE ENVÍOS ====================
 
     private void mostrarGestionEnvios() {
         contentArea.getChildren().clear();
@@ -521,12 +501,10 @@ public class DashboardAdminController {
         Button btnAgregarEnvio = new Button("Agregar Envío");
         btnAgregarEnvio.setStyle("-fx-background-color: #28a745; -fx-text-fill: white; -fx-cursor: hand;");
 
-        // Tabla de envíos
         TableView<Envio> tablaEnvios = new TableView<>();
         tablaEnvios.setPrefHeight(300);
         tablaEnvios.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // Columnas
         TableColumn<Envio, Integer> colId = new TableColumn<>("ID");
         colId.setCellValueFactory(cellData ->
                 new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
@@ -568,7 +546,6 @@ public class DashboardAdminController {
 
         tablaEnvios.getColumns().addAll(colId, colDestino, colDepartamento, colPeso, colEstado);
 
-        // Cargar datos
         ObservableList<Envio> listaEnvios = FXCollections.observableArrayList(admin.getListEnvios());
         tablaEnvios.setItems(listaEnvios);
 
@@ -657,9 +634,7 @@ public class DashboardAdminController {
         dialog.showAndWait();
     }
 
-    /**
-     * Método auxiliar para mostrar alertas
-     */
+
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);

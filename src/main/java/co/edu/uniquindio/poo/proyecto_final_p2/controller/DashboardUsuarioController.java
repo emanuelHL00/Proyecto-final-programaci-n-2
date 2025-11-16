@@ -28,16 +28,13 @@ public class DashboardUsuarioController {
 
     private Usuario usuarioActual;
 
-    /**
-     * Método para inicializar los datos del usuario
-     */
+
     public void inicializarDatos(Usuario usuario) {
         this.usuarioActual = usuario;
         System.out.println("Usuario logueado: " + usuario.getNombre());
         System.out.println("Dirección: " + usuario.getDireccion());
         System.out.println("Envíos registrados: " + usuario.getListEnviosPropios().size());
 
-        // Configurar listeners para los botones
         configurarBotones();
     }
 
@@ -47,7 +44,6 @@ public class DashboardUsuarioController {
         btnActualizarDireccion.setOnAction(event -> mostrarActualizarDireccion());
     }
 
-    // ==================== SOLICITAR ENVÍO ====================
 
     private void mostrarSolicitarEnvio() {
         contentArea.getChildren().clear();
@@ -58,7 +54,6 @@ public class DashboardUsuarioController {
         Label lblInfo = new Label("Origen: Bodega Envíos Express");
         lblInfo.setStyle("-fx-font-size: 14px; -fx-text-fill: #495057; -fx-padding: 5;");
 
-        // Formulario
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -98,7 +93,6 @@ public class DashboardUsuarioController {
         Label lblTiempoEstimado = new Label("Tiempo estimado: 0 horas");
         lblTiempoEstimado.setStyle("-fx-font-size: 14px; -fx-text-fill: #6c757d;");
 
-        // Botón para calcular costo
         Button btnCalcular = new Button("Calcular Costo");
         btnCalcular.setStyle("-fx-background-color: #17a2b8; -fx-text-fill: white; -fx-cursor: hand;");
 
@@ -119,7 +113,6 @@ public class DashboardUsuarioController {
         grid.add(new Label("Tipo de envío:"), 0, 6);
         grid.add(cbEstrategia, 1, 6);
 
-        // Evento para calcular costo
         btnCalcular.setOnAction(e -> {
             try {
                 double distancia = Double.parseDouble(txtDistancia.getText().trim());
@@ -127,11 +120,9 @@ public class DashboardUsuarioController {
                 double volumen = Double.parseDouble(txtVolumen.getText().trim());
                 boolean prioridad = chkPrioridad.isSelected();
 
-                // Crear envío temporal para calcular
                 Envio envioTemp = new Envio(0, txtDestino.getText().trim(), cbDepartamento.getValue(),
                         distancia, peso, volumen, prioridad);
 
-                // Aplicar estrategia seleccionada
                 IEstrategiaEnvio estrategia;
                 switch (cbEstrategia.getValue()) {
                     case "Express":
@@ -156,7 +147,6 @@ public class DashboardUsuarioController {
             }
         });
 
-        // Evento para crear envío
         btnCrearEnvio.setOnAction(e -> {
             try {
                 String destino = txtDestino.getText().trim();
@@ -170,7 +160,6 @@ public class DashboardUsuarioController {
                 double volumen = Double.parseDouble(txtVolumen.getText().trim());
                 boolean prioridad = chkPrioridad.isSelected();
 
-                // Aplicar estrategia seleccionada
                 IEstrategiaEnvio estrategia;
                 switch (cbEstrategia.getValue()) {
                     case "Express":
@@ -185,7 +174,6 @@ public class DashboardUsuarioController {
 
                 usuarioActual.setEstrategiaEnvio(estrategia);
 
-                // Crear el envío
                 Envio nuevoEnvio = usuarioActual.crearEnvio(
                         destino,
                         cbDepartamento.getValue(),
@@ -217,7 +205,6 @@ public class DashboardUsuarioController {
                 ));
                 exitoAlert.showAndWait();
 
-                // Limpiar formulario
                 txtDestino.clear();
                 txtDistancia.clear();
                 txtPeso.clear();
@@ -244,7 +231,6 @@ public class DashboardUsuarioController {
         contentArea.setSpacing(10);
     }
 
-    // ==================== CONSULTAR ENVÍOS ====================
 
     private void mostrarConsultarEnvios() {
         contentArea.getChildren().clear();
@@ -259,11 +245,9 @@ public class DashboardUsuarioController {
             return;
         }
 
-        // Tabla de envíos
         TableView<Envio> tablaEnvios = new TableView<>();
         tablaEnvios.setPrefHeight(300);
 
-        // ===== COLUMNAS CON LAMBDAS (FUNCIONA SIEMPRE) =====
         TableColumn<Envio, Integer> colId = new TableColumn<>("ID");
         colId.setCellValueFactory(c ->
                 new javafx.beans.property.SimpleIntegerProperty(c.getValue().getId()).asObject()
@@ -291,12 +275,10 @@ public class DashboardUsuarioController {
 
         tablaEnvios.getColumns().addAll(colId, colDestino, colDepartamento, colPeso, colEstado);
 
-        // Cargar datos
         ObservableList<Envio> listaEnvios =
                 FXCollections.observableArrayList(usuarioActual.getListEnviosPropios());
         tablaEnvios.setItems(listaEnvios);
 
-        // Botones
         Button btnVerDetalles = new Button("Ver Detalles");
         btnVerDetalles.setStyle("-fx-background-color: #007bff; -fx-text-fill: white; -fx-cursor: hand;");
 
@@ -306,7 +288,6 @@ public class DashboardUsuarioController {
         Button btnCancelar = new Button("Cancelar Envío");
         btnCancelar.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-cursor: hand;");
 
-        // Eventos
 
         btnVerDetalles.setOnAction(e -> {
             Envio seleccionado = tablaEnvios.getSelectionModel().getSelectedItem();
@@ -404,7 +385,6 @@ public class DashboardUsuarioController {
         alert.showAndWait();
     }
 
-    // ==================== ACTUALIZAR DIRECCIÓN ====================
 
     private void mostrarActualizarDireccion() {
         contentArea.getChildren().clear();
@@ -442,13 +422,11 @@ public class DashboardUsuarioController {
             if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
                 usuarioActual.setDireccion(nuevaDireccion);
 
-                // Actualizar en el administrador
                 Administrador admin = Administrador.getInstancia();
                 admin.actualizarUsuario(usuarioActual);
 
                 mostrarAlerta("Éxito", "Dirección actualizada correctamente", Alert.AlertType.INFORMATION);
 
-                // Actualizar la vista
                 lblActual.setText("Dirección actual: " + usuarioActual.getDireccion());
             }
         });
@@ -461,9 +439,7 @@ public class DashboardUsuarioController {
         return usuarioActual;
     }
 
-    /**
-     * Método auxiliar para mostrar alertas
-     */
+
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);

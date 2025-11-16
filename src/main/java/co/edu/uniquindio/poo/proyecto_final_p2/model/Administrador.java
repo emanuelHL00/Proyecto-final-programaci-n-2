@@ -19,7 +19,6 @@ public class Administrador {
         this.listRepartidores = new ArrayList<>();
         this.listEnvios = new ArrayList<>();
 
-        // Cargar datos quemados automáticamente
         cargarDatosQuemados();
     }
 
@@ -31,11 +30,8 @@ public class Administrador {
         return instance;
     }
 
-    /**
-     * Método para cargar datos de prueba
-     */
+
     private void cargarDatosQuemados() {
-        // Crear usuarios de prueba
         Usuario usuario1 = new Usuario.Builder()
                 .id(1001)
                 .nombre("Juan Pérez")
@@ -60,12 +56,10 @@ public class Administrador {
                 .direccion("Avenida Bolívar #30-50, Calarcá")
                 .build();
 
-        // Agregar usuarios
         listUsuarios.add(usuario1);
         listUsuarios.add(usuario2);
         listUsuarios.add(usuario3);
 
-        // Crear repartidores de prueba
         Repartidor repartidor1 = Repartidor.crearRepartidor(
                 2001, "Pedro Martínez", "3151234567", "1234", ZonaCobertura.ARMENIA
         );
@@ -84,29 +78,25 @@ public class Administrador {
         );
         repartidor4.setDisponibilidad(Disponibilidad.INACTIVO);
 
-        // Agregar repartidores
         listRepartidores.add(repartidor1);
         listRepartidores.add(repartidor2);
         listRepartidores.add(repartidor3);
         listRepartidores.add(repartidor4);
 
-        // Crear envíos de prueba
         Envio envio1 = new Envio(1, "Calle 20 #15-30", ZonaCobertura.ARMENIA, 10.5, 3.0, 0.5, true);
         Envio envio2 = new Envio(2, "Carrera 8 #12-45", ZonaCobertura.MONTENEGRO, 25.0, 8.0, 1.2, false);
         Envio envio3 = new Envio(3, "Avenida Centenario #40-20", ZonaCobertura.CALARCA, 15.0, 2.5, 0.3, true);
-        envio3.avanzarEstado(); // Cambiar a ASIGNADO
+        envio3.avanzarEstado();
 
-        // Agregar envíos
         listEnvios.add(envio1);
         listEnvios.add(envio2);
         listEnvios.add(envio3);
 
-        // Asociar envíos a usuarios
         usuario1.getListEnviosPropios().add(envio1);
         usuario2.getListEnviosPropios().add(envio2);
         usuario3.getListEnviosPropios().add(envio3);
 
-        System.out.println("✓ Datos quemados cargados:");
+        System.out.println("✓Datos quemados cargados:");
         System.out.println("  - " + listUsuarios.size() + " usuarios");
         System.out.println("  - " + listRepartidores.size() + " repartidores");
         System.out.println("  - " + listEnvios.size() + " envíos");
