@@ -1,28 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="504.0" prefWidth="718.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyecto_final_p2.controller.DashboardUsuarioController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f8f9fa;"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.poo.proyecto_final_p2.controller.DashboardUsuarioController">
 
     <!-- Panel lateral izquierdo -->
-    <VBox layoutX="0" layoutY="0" prefHeight="400" prefWidth="180" spacing="12" style="-fx-background-color: #ffffff; -fx-padding: 20; -fx-border-color: #dee2e6; -fx-border-width: 0 1 0 0;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
+    <VBox layoutX="0" layoutY="0" prefHeight="600" prefWidth="200" spacing="12"
+          style="-fx-background-color: #8e44ad; -fx-padding: 20; -fx-border-color: #9b59b6; -fx-border-width: 0 2 0 0;"
+          AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
 
-        <Label style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #212529;" text="Menú de Usuario" />
+        <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: white; -fx-padding: 0 0 10 0;"
+               text="Menú de Usuario" />
 
-        <Button fx:id="btnSolicitarEnvio" maxWidth="160" style="-fx-background-color: transparent; -fx-text-fill: #495057; -fx-font-size: 14px; -fx-cursor: hand;" text="Solicitar envío" />
+        <Separator style="-fx-background-color: #9b59b6;" />
 
-        <Button fx:id="btnConsultarEnvio" maxWidth="160" style="-fx-background-color: transparent; -fx-text-fill: #495057; -fx-font-size: 14px; -fx-cursor: hand;" text="Consultar envío" />
+        <Button fx:id="btnSolicitarEnvio" maxWidth="180"
+                style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand; -fx-padding: 10; -fx-background-radius: 5;"
+                text="Solicitar Envío" />
 
-        <Button fx:id="btnActualizarDireccion" maxWidth="160" style="-fx-background-color: transparent; -fx-text-fill: #495057; -fx-font-size: 14px; -fx-cursor: hand;" text="Actualizar dirección" />
+        <Button fx:id="btnConsultarEnvio" maxWidth="180"
+                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand; -fx-padding: 10; -fx-background-radius: 5;"
+                text="Mis Envíos" />
+
+        <Button fx:id="btnActualizarDireccion" maxWidth="180"
+                style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand; -fx-padding: 10; -fx-background-radius: 5;"
+                text="Mi Dirección" />
     </VBox>
 
     <!-- Área principal donde cargaremos el contenido dinámico -->
-    <VBox fx:id="contentArea" layoutX="200" layoutY="20" prefHeight="470.0" prefWidth="503.0" style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;" AnchorPane.leftAnchor="200" AnchorPane.topAnchor="20">
-        <Label style="-fx-font-size: 20px; -fx-text-fill: #212529;" text="Bienvenido al Dashboard" />
-    </VBox>
+    <ScrollPane layoutX="220" layoutY="20" prefHeight="560.0" prefWidth="660.0"
+                style="-fx-background: white; -fx-border-color: #bdc3c7; -fx-border-radius: 5; -fx-background-radius: 5;"
+                AnchorPane.leftAnchor="220" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20"
+                fitToWidth="true">
+        <VBox fx:id="contentArea" style="-fx-background-color: white; -fx-padding: 20;">
+            <Label style="-fx-font-size: 24px; -fx-text-fill: #8e44ad; -fx-font-weight: bold;"
+                   text="Bienvenido a tu Dashboard" />
+            <Label text="Seleccione una opción del menú lateral"
+                   style="-fx-font-size: 16px; -fx-text-fill: #7f8c8d; -fx-padding: 10 0 0 0;" />
+        </VBox>
+    </ScrollPane>
 
 </AnchorPane>
 
